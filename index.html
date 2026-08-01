@@ -1,0 +1,1665 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Friendship Day</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Parisienne&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --sky-deep: #1a060d;
+    --sky-mid: #33101c;
+    --sky-indigo: #5c1a2c;
+    --star-gold: #f4b880;
+    --moon-glow: #fff0f2;
+    --lavender: #f4b8c8;
+    --blush: #ff6f91;
+    --ink: #fff3f5;
+    --ink-dim: rgba(255,243,245,0.62);
+  }
+
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background: var(--sky-deep);
+    color: var(--ink);
+    font-family: 'Jost', sans-serif;
+    font-weight: 300;
+    overflow-x:hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important;}
+  }
+
+  a:focus-visible, button:focus-visible, [tabindex]:focus-visible{
+    outline: 2px solid var(--star-gold);
+    outline-offset: 4px;
+  }
+
+  /* ---------- shared ---------- */
+  .eyebrow{
+    font-family:'Jost', sans-serif;
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+    font-size:0.72rem;
+    color: var(--lavender);
+    opacity:0.85;
+  }
+  .display{
+    font-family:'Cormorant Garamond', serif;
+    font-weight:500;
+    line-height:1.05;
+  }
+  .script{
+    font-family:'Parisienne', cursive;
+    font-weight:400;
+  }
+  section{
+    position:relative;
+    padding: 8rem 6vw;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+  @media (max-width: 640px){
+    section{padding: 5.5rem 6vw;}
+  }
+
+  /* ---------- starfield canvas (fixed, behind everything) ---------- */
+  #stars-canvas{
+    position:fixed;
+    inset:0;
+    width:100%;
+    height:100%;
+    z-index:0;
+    background: radial-gradient(ellipse at 50% -10%, var(--sky-indigo) 0%, var(--sky-mid) 45%, var(--sky-deep) 100%);
+  }
+
+  main{position:relative; z-index:1;}
+
+  /* ---------- hero ---------- */
+  .hero{
+    min-height:100svh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 2rem 6vw;
+    position:relative;
+  }
+  .moon{
+    width:min(150px, 28vw);
+    height:min(150px, 28vw);
+    border-radius:50%;
+    margin-bottom:2.2rem;
+    background:
+      radial-gradient(circle at 38% 35%, rgba(255,255,255,0.9), transparent 40%),
+      radial-gradient(circle at 60% 60%, rgba(200,190,220,0.25), transparent 45%),
+      var(--moon-glow);
+    box-shadow: 0 0 60px 12px rgba(255,240,242,0.35), 0 0 140px 40px rgba(244,184,200,0.12);
+    animation: float 7s ease-in-out infinite;
+  }
+  @keyframes float{
+    0%,100%{ transform: translateY(0); }
+    50%{ transform: translateY(-14px); }
+  }
+  .hero .eyebrow{margin-bottom:1.4rem;}
+  .hero h1{
+    font-size: clamp(2.6rem, 7vw, 5rem);
+    max-width: 16ch;
+  }
+  .hero h1 .script{
+    display:block;
+    font-size: clamp(3.2rem, 9vw, 6.2rem);
+    color: var(--star-gold);
+    line-height:1;
+    margin-top:0.3rem;
+  }
+  .hero p{
+    margin-top:1.8rem;
+    color: var(--ink-dim);
+    font-size:1.05rem;
+    max-width:34ch;
+  }
+  .hero-subtext{
+    margin-top: 0.9rem;
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.15rem, 3vw, 1.4rem);
+    color: var(--lavender);
+  }
+  .hero-photo{
+    width:min(210px, 46vw);
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    overflow:hidden;
+    margin: 1.8rem 0;
+    border: 1px solid rgba(244,184,200,0.3);
+    box-shadow: 0 0 40px 8px rgba(244,184,200,0.15);
+  }
+  .hero-photo img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .hero-teaser{
+    margin-top: 0.4rem;
+    max-width: 34ch;
+    color: var(--ink-dim);
+    font-size: 1rem;
+    line-height:1.7;
+  }
+  .hero-teaser .highlight{
+    display:inline-block;
+    margin-top: 0.9rem;
+    color: var(--sky-deep);
+    background: linear-gradient(135deg, var(--star-gold), var(--blush));
+    padding: 0.5em 0.9em;
+    border-radius: 6px;
+    font-weight:500;
+    line-height:1.5;
+  }
+  .hero-teaser .note{
+    display:block;
+    margin-top:0.7rem;
+    font-size:0.8rem;
+    letter-spacing:0.04em;
+    opacity:0.85;
+  }
+  .scroll-cue{
+    position:absolute;
+    bottom: 2.6rem;
+    left: 46%;
+    transform:translateX(-50%);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:0.6rem;
+    color: var(--ink-dim);
+    font-size:0.68rem;
+    letter-spacing:0.3em;
+    text-transform:uppercase;
+  }
+  .scroll-cue span.line{
+    width:100px; height: 5px;
+    background: linear-gradient(var(--ink-dim), transparent);
+    animation: pulse-line 2.4s ease-in-out infinite;
+  }
+  @keyframes pulse-line{
+    0%,100%{opacity:0.3;} 50%{opacity:1;}
+  }
+
+  /* ---------- section headers ---------- */
+  .section-head{
+    text-align:center;
+    margin-bottom: 3.2rem;
+  }
+  .section-head h2{
+    font-size: clamp(2rem, 4.2vw, 3rem);
+    margin-top:0.6rem;
+    color: var(--ink);
+  }
+  .section-head p{
+    color: var(--ink-dim);
+    margin-top:0.9rem;
+    max-width:44ch;
+    margin-left:auto;
+    margin-right:auto;
+    font-size:0.98rem;
+  }
+
+  /* ---------- constellation of memories ---------- */
+  .constellation-wrap{
+    position:relative;
+    width:100%;
+    aspect-ratio: 16/10;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  #constellation-svg{
+    width:100%;
+    height:100%;
+    overflow:visible;
+  }
+  .constellation-line{
+    stroke: rgba(244,184,200,0.35);
+    stroke-width:1;
+    stroke-dasharray: 4 6;
+    fill:none;
+  }
+  .star-node{
+    cursor:pointer;
+  }
+  .star-node circle.core{
+    fill: var(--star-gold);
+    filter: drop-shadow(0 0 6px rgba(244,184,128,0.9));
+    transition: r 0.25s ease, filter 0.25s ease;
+  }
+  .star-node:hover circle.core, .star-node.active circle.core{
+    filter: drop-shadow(0 0 14px rgba(244,184,128,1));
+  }
+  .star-node text{
+    fill: var(--ink-dim);
+    font-family:'Jost', sans-serif;
+    font-size: 11px;
+    letter-spacing:0.05em;
+    text-transform:uppercase;
+    pointer-events:none;
+  }
+
+  .memory-card{
+    margin: 3rem auto 0;
+    max-width: 520px;
+    background: linear-gradient(180deg, rgba(92,26,44,0.55), rgba(51,16,28,0.55));
+    border: 1px solid rgba(244,184,200,0.18);
+    border-radius: 4px;
+    padding: 2.2rem 2.2rem;
+    text-align:center;
+    backdrop-filter: blur(6px);
+    opacity:0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+  .memory-card.visible{opacity:1; transform:translateY(0);}
+  .memory-card .memory-date{
+    color: var(--star-gold);
+    font-size:0.72rem;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+  }
+  .memory-card h3{
+    font-family:'Cormorant Garamond', serif;
+    font-size:1.7rem;
+    font-weight:500;
+    margin: 0.6rem 0 0.8rem;
+  }
+  .memory-card p{
+    color: var(--ink-dim);
+    font-size:0.95rem;
+    line-height:1.6;
+  }
+  .memory-hint{
+    text-align:center;
+    color: var(--ink-dim);
+    font-size:0.8rem;
+    margin-top:1rem;
+    opacity:0.7;
+  }
+
+  /* ---------- letter ---------- */
+  .letter{
+    max-width: 640px;
+    margin: 0 auto;
+    background: rgba(51,16,28,0.35);
+    border: 1px solid rgba(244,184,200,0.15);
+    border-radius: 4px;
+    padding: clamp(2.2rem, 5vw, 4rem);
+  }
+  .letter .dropcap{
+    float:left;
+    font-family:'Cormorant Garamond', serif;
+    font-size:4.4rem;
+    line-height:0.8;
+    padding-right:0.5rem;
+    padding-top:0.3rem;
+    color: var(--star-gold);
+  }
+  .letter p{
+    font-family:'Cormorant Garamond', serif;
+    font-size: 1.28rem;
+    line-height:1.75;
+    color: var(--ink);
+    margin-bottom:1.2rem;
+  }
+  .letter .sign-off{
+    margin-top:2rem;
+    text-align:right;
+  }
+  .letter .sign-off .script{
+    font-size:2rem;
+    color: var(--star-gold);
+  }
+
+  /* ---------- time together ---------- */
+  .together{
+    text-align:center;
+  }
+  .together-count{
+    display:flex;
+    justify-content:center;
+    gap: clamp(1rem, 4vw, 3rem);
+    flex-wrap:wrap;
+    margin-top: 2.5rem;
+  }
+  .together-count .unit{
+    min-width: 90px;
+  }
+  .together-count .num{
+    font-family:'Cormorant Garamond', serif;
+    font-size: clamp(2.6rem, 6vw, 4rem);
+    color: var(--star-gold);
+    font-variant-numeric: tabular-nums;
+  }
+  .together-count .label{
+    margin-top:0.4rem;
+    font-size:0.7rem;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color: var(--ink-dim);
+  }
+  .together-since{
+    margin-top:1.6rem;
+    color: var(--ink-dim);
+    font-size:0.9rem;
+  }
+
+  /* ---------- scroll reveal ---------- */
+  .reveal{
+    opacity:0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(.19,1,.22,1), transform 0.9s cubic-bezier(.19,1,.22,1);
+  }
+  .reveal.in-view{
+    opacity:1;
+    transform: translateY(0);
+  }
+  .reveal-stagger.in-view .stagger-item:nth-child(1){transition-delay: 0.05s;}
+  .reveal-stagger.in-view .stagger-item:nth-child(2){transition-delay: 0.18s;}
+  .reveal-stagger.in-view .stagger-item:nth-child(3){transition-delay: 0.31s;}
+  .reveal-stagger.in-view .stagger-item:nth-child(4){transition-delay: 0.44s;}
+  .stagger-item{
+    opacity:0;
+    transform: translateY(20px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .reveal-stagger.in-view .stagger-item{opacity:1; transform:translateY(0);}
+
+  /* ---------- hero entrance ---------- */
+  .hero .moon{ animation: float 7s ease-in-out infinite, moon-in 1.4s ease both; }
+  .hero .eyebrow{ animation: fade-up 1s ease 0.15s both; }
+  .hero h1{ animation: fade-up 1s ease 0.35s both; }
+  .hero h1 .script{ animation: fade-up 1.1s ease 0.55s both; }
+  .hero p{ animation: fade-up 1s ease 0.75s both; }
+  .hero-subtext{ animation: fade-up 1s ease 0.75s both; }
+  .hero-photo{ animation: fade-up 1s ease 0.95s both, float 7s ease-in-out 1.95s infinite; }
+  .hero-teaser{ animation: fade-up 1s ease 1.15s both; }
+  .scroll-cue{ animation: fade-up 1s ease 1.4s both; }
+  @keyframes fade-up{
+    from{ opacity:0; transform: translateY(16px); }
+    to{ opacity:1; transform: translateY(0); }
+  }
+  @keyframes moon-in{
+    from{ opacity:0; transform: scale(0.6); }
+    to{ opacity:1; transform: scale(1); }
+  }
+
+  /* ---------- shimmer text ---------- */
+  .shimmer{
+    background: linear-gradient(90deg, var(--star-gold), var(--blush), var(--lavender), var(--star-gold));
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: shimmer-move 6s linear infinite;
+  }
+  @keyframes shimmer-move{
+    0%{ background-position: 0% 50%; }
+    100%{ background-position: 300% 50%; }
+  }
+
+  /* ---------- floating ambient particles ---------- */
+  #particles{
+    position:fixed;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .particle{
+    position:absolute;
+    bottom:-30px;
+    opacity:0;
+    will-change: transform, opacity;
+    animation: particle-float linear forwards;
+  }
+  @keyframes particle-float{
+    0%{ transform: translateY(0) translateX(0) rotate(0deg); opacity:0; }
+    8%{ opacity: var(--p-op, 0.55); }
+    85%{ opacity: var(--p-op, 0.55); }
+    100%{ transform: translateY(-115vh) translateX(var(--p-drift, 20px)) rotate(360deg); opacity:0; }
+  }
+  .particle.butterfly{
+    animation-name: butterfly-flutter;
+    animation-timing-function: ease-in-out;
+  }
+  @keyframes butterfly-flutter{
+    0%{ transform: translate(0, 0) rotate(-6deg); opacity:0; }
+    8%{ opacity: var(--p-op, 0.6); }
+    20%{ transform: translate(28px, -22vh) rotate(10deg); }
+    38%{ transform: translate(-24px, -42vh) rotate(-9deg); }
+    56%{ transform: translate(22px, -63vh) rotate(8deg); }
+    74%{ transform: translate(-20px, -85vh) rotate(-7deg); }
+    90%{ opacity: var(--p-op, 0.6); }
+    100%{ transform: translate(var(--p-drift, 16px), -112vh) rotate(6deg); opacity:0; }
+  }
+
+  /* ---------- quote carousel ---------- */
+  .quote-carousel{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap: clamp(0.8rem, 3vw, 1.8rem);
+    max-width: 680px;
+    margin: 0 auto;
+  }
+  .quote-viewport{
+    min-height: 130px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    flex:1;
+  }
+  .quote-text{
+    font-family:'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.25rem, 3.2vw, 1.75rem);
+    color: var(--ink);
+    line-height:1.5;
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .quote-text.fade{
+    opacity:0;
+    transform: translateY(10px);
+  }
+  .quote-arrow{
+    flex-shrink:0;
+    width:42px; height:42px;
+    border-radius:50%;
+    border: 1px solid rgba(244,184,200,0.4);
+    background: transparent;
+    color: var(--ink);
+    font-size:1.3rem;
+    line-height:1;
+    cursor:pointer;
+    transition: border-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+  }
+  .quote-arrow:hover{
+    border-color: var(--star-gold);
+    color: var(--star-gold);
+    transform: scale(1.12);
+  }
+  .quote-dots{
+    display:flex;
+    justify-content:center;
+    gap:0.55rem;
+    margin-top: 1.8rem;
+  }
+  .quote-dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    background: rgba(244,184,200,0.3);
+    transition: background 0.3s ease, transform 0.3s ease;
+  }
+  .quote-dot.active{
+    background: var(--star-gold);
+    transform: scale(1.5);
+  }
+
+  /* ---------- music toggle ---------- */
+  .music-toggle{
+    position: fixed;
+    top: 1.1rem;
+    right: 1.1rem;
+    z-index: 60;
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    border: 1px solid rgba(244,184,200,0.35);
+    background: rgba(51,16,28,0.55);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    color: var(--ink);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    transition: border-color 0.3s ease, transform 0.2s ease, color 0.3s ease;
+  }
+  .music-toggle:hover{
+    border-color: var(--star-gold);
+    color: var(--star-gold);
+    transform: scale(1.08);
+  }
+  .music-toggle .bars{ display:flex; align-items:flex-end; gap:3px; height:16px; }
+  .music-toggle .bars span{
+    display:block;
+    width:3px;
+    background: currentColor;
+    border-radius:2px;
+    animation: music-bar 0.9s ease-in-out infinite;
+  }
+  .music-toggle .bars span:nth-child(1){ height:6px; animation-delay:0s; }
+  .music-toggle .bars span:nth-child(2){ height:14px; animation-delay:0.15s; }
+  .music-toggle .bars span:nth-child(3){ height:9px; animation-delay:0.3s; }
+  .music-toggle.playing .bars span{ animation-play-state: running; }
+  .music-toggle:not(.playing) .bars span{ animation-play-state: paused; height:5px; }
+  @keyframes music-bar{
+    0%, 100%{ transform: scaleY(0.4); }
+    50%{ transform: scaleY(1); }
+  }
+  @media (max-width: 640px){
+    .music-toggle{ top: 0.8rem; right: 0.8rem; width:42px; height:42px; }
+  }
+
+  /* ---------- gif slider (cute + chaotic) ---------- */
+  .gif-slider-wrap{
+    position:relative;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+  .gif-slider{
+    display:flex;
+    gap: 1.3rem;
+    overflow-x:auto;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0.5rem 6vw 1.8rem;
+    margin: 0 -6vw;
+    scrollbar-width:none;
+  }
+  .gif-slider::-webkit-scrollbar{ display:none; }
+  .gif-slide{
+    flex: 0 0 min(260px, 68vw);
+    scroll-snap-align: center;
+    text-align:center;
+  }
+  .gif-frame{
+    border-radius: 16px;
+    overflow:hidden;
+    border: 1px solid rgba(244,184,200,0.18);
+    background: linear-gradient(180deg, rgba(92,26,44,0.45), rgba(51,16,28,0.45));
+    aspect-ratio: 1/1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .gif-frame img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+  }
+  .gif-quote{
+    margin-top:1rem;
+    font-family:'Cormorant Garamond', serif;
+    font-style:italic;
+    font-size:1.05rem;
+    color: var(--ink-dim);
+    line-height:1.5;
+    padding: 0 0.4rem;
+  }
+  .gif-slider-nav{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:1.4rem;
+    margin-top:0.4rem;
+  }
+  .gif-dots{
+    display:flex;
+    gap:0.5rem;
+  }
+  .gif-dot{
+    width:6px; height:6px;
+    border-radius:50%;
+    background: rgba(244,184,200,0.3);
+    transition: background 0.3s ease, transform 0.3s ease;
+    cursor:pointer;
+  }
+  .gif-dot.active{
+    background: var(--star-gold);
+    transform: scale(1.5);
+  }
+  @media (max-width: 640px){
+    .gif-slider-nav .quote-arrow{ display:none; }
+  }
+
+  /* ---------- mystery reveal ---------- */
+  .mystery{
+    text-align:center;
+  }
+  .mystery-eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:0.6rem;
+  }
+  .ping{
+    width:7px; height:7px;
+    border-radius:50%;
+    background: var(--blush);
+    box-shadow: 0 0 0 0 rgba(255,111,145,0.6);
+    animation: ping 1.8s ease-out infinite;
+  }
+  @keyframes ping{
+    0%{ box-shadow: 0 0 0 0 rgba(255,111,145,0.55); }
+    70%{ box-shadow: 0 0 0 10px rgba(255,111,145,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(255,111,145,0); }
+  }
+  .mystery-stage{
+    min-height: 220px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap: 1.8rem;
+    margin-top: 2rem;
+  }
+  .mystery-text{
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    max-width: 26ch;
+    color: var(--ink);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .mystery-text.fade{
+    opacity:0;
+    transform: translateY(8px);
+  }
+  .btn-mystery{
+    font-family:'Jost', sans-serif;
+    font-size: 0.9rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.9rem 2rem;
+    border-radius: 999px;
+    border: 1px solid rgba(244,184,200,0.4);
+    background: transparent;
+    color: var(--ink);
+    cursor:pointer;
+    transform: translate(var(--mx, 0px), var(--my, 0px)) scale(var(--mscale, 1));
+    transition: transform 0.15s ease, background 0.3s ease, border-color 0.3s ease, opacity 0.3s ease;
+  }
+  .btn-mystery:hover{ --mscale: 1.05; border-color: rgba(244,184,128,0.6); }
+  .btn-mystery.fade{ opacity:0; transform: scale(0.92); pointer-events:none; }
+  .mystery-stage.done{ display:none; }
+
+  .mystery-final{
+    max-width: 34ch;
+    margin: 0 auto;
+    opacity:0;
+    transform: scale(0.94);
+    height:0;
+    overflow:hidden;
+    transition: opacity 0.7s cubic-bezier(.34,1.2,.64,1), transform 0.7s cubic-bezier(.34,1.2,.64,1);
+  }
+  .mystery-final.show{
+    opacity:1;
+    transform: scale(1);
+    height:auto;
+    margin-top: 1rem;
+  }
+  .mystery-final h2{
+    font-size: clamp(2.1rem, 5.2vw, 3rem);
+    margin-top: 0.6rem;
+  }
+  .mystery-final p{
+    margin-top: 1.1rem;
+    color: var(--ink-dim);
+    font-size: 1rem;
+    line-height:1.7;
+  }
+
+  /* ---------- snapshots gallery ---------- */
+  .gallery-grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: clamp(1rem, 3vw, 1.8rem);
+  }
+  @media (max-width: 640px){
+    .gallery-grid{ grid-template-columns: 1fr; }
+  }
+  .gallery-card{
+    position:relative;
+    aspect-ratio: 3/4;
+    border-radius: 6px;
+    overflow:hidden;
+    border: 1px solid rgba(244,184,200,0.15);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+  .gallery-card:hover{
+    box-shadow: 0 20px 40px -12px rgba(0,0,0,0.55);
+  }
+  .gallery-card img{
+    width:100%; height:100%;
+    object-fit:cover;
+    display:block;
+    transition: transform 0.7s ease;
+  }
+  .gallery-card:hover img{ transform: scale(1.07); }
+  .gallery-card::after{
+    content:'';
+    position:absolute; inset:0;
+    background: linear-gradient(to top, rgba(26,6,13,0.92) 0%, rgba(26,6,13,0.35) 48%, transparent 75%);
+    pointer-events:none;
+  }
+  .gallery-caption{
+    position:absolute;
+    left:0; right:0; bottom:0;
+    padding: 1.4rem 1.3rem;
+    z-index:2;
+    text-align:left;
+  }
+  .gallery-caption .num{
+    font-size:0.65rem;
+    letter-spacing:0.24em;
+    text-transform:uppercase;
+    color: var(--star-gold);
+  }
+  .gallery-caption h3{
+    font-size: 1.5rem;
+    margin-top: 0.4rem;
+    color: var(--ink);
+  }
+  .gallery-caption p{
+    font-size: 0.85rem;
+    color: var(--ink-dim);
+    margin-top: 0.35rem;
+    line-height:1.5;
+  }
+  .snap-note{
+    max-width: 620px;
+    margin: 2.8rem auto 0;
+    text-align:center;
+    font-family:'Cormorant Garamond', serif;
+    font-size: 1.2rem;
+    line-height:1.75;
+    color: var(--ink-dim);
+  }
+
+  /* ---------- forever question ---------- */
+  .forever{
+    text-align:center;
+  }
+  .forever .stars-burst-wrap{
+    position:relative;
+  }
+  .forever h2{ font-size: clamp(2rem, 5vw, 3.2rem); max-width: 18ch; margin: 0.6rem auto 0; }
+  .question-box{
+    position:relative;
+    margin: 3rem auto 0;
+    min-height: 160px;
+    max-width: 480px;
+  }
+  .btn-row{
+    position:relative;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap: 1.6rem;
+    flex-wrap:wrap;
+    min-height: 140px;
+  }
+  .btn{
+    font-family:'Jost', sans-serif;
+    font-size: 0.95rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.95rem 2.1rem;
+    border-radius: 999px;
+    border: 1px solid rgba(244,184,200,0.4);
+    background: transparent;
+    color: var(--ink);
+    cursor:pointer;
+    transition: transform 0.15s ease, background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .btn-yes{
+    background: linear-gradient(135deg, var(--star-gold), var(--blush));
+    color: var(--sky-deep);
+    border: none;
+    font-weight:500;
+    box-shadow: 0 0 0 rgba(244,184,128,0);
+    animation: yes-pulse 2.2s ease-in-out infinite;
+    transform: translate(var(--mx, 0px), var(--my, 0px)) scale(var(--mscale, 1));
+    transition: transform 0.15s ease, background 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+  }
+  .btn-yes:hover{ --mscale: 1.08; }
+  @keyframes yes-pulse{
+    0%,100%{ box-shadow: 0 0 0 0 rgba(244,184,128,0.35); }
+    50%{ box-shadow: 0 0 0 10px rgba(244,184,128,0); }
+  }
+  .btn-no{
+    position: relative;
+  }
+  .btn-no.is-dodging{
+    position: fixed;
+    z-index: 40;
+    transition: top 0.28s cubic-bezier(.34,1.56,.64,1), left 0.28s cubic-bezier(.34,1.56,.64,1);
+  }
+  .btn-no:hover{ border-color: rgba(244,184,200,0.7); }
+
+  .forever-result{
+    margin-top: 2.2rem;
+    min-height: 2rem;
+  }
+  .forever-result .script{
+    font-size: 1.9rem;
+    color: var(--star-gold);
+    opacity:0;
+    transform: scale(0.85);
+    display:inline-block;
+  }
+  .forever-result.show .script{
+    animation: pop-in 0.6s cubic-bezier(.34,1.56,.64,1) forwards;
+  }
+  @keyframes pop-in{
+    to{ opacity:1; transform: scale(1); }
+  }
+
+  .heart-burst{
+    position: fixed;
+    z-index: 45;
+    pointer-events: none;
+    font-size: 1.1rem;
+    color: var(--blush);
+    animation: heart-rise 1.4s ease-out forwards;
+  }
+  @keyframes heart-rise{
+    0%{ opacity: 1; transform: translateY(0) scale(0.6) rotate(0deg); }
+    100%{ opacity: 0; transform: translateY(-120px) scale(1.2) rotate(20deg); }
+  }
+
+  .no-count{
+    margin-top: 1rem;
+    font-size: 0.78rem;
+    letter-spacing: 0.1em;
+    color: var(--ink-dim);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+  .no-count.show{ opacity: 0.75; }
+
+  /* ---------- footer ---------- */
+  footer{
+    position:relative;
+    z-index:1;
+    text-align:center;
+    padding: 5rem 6vw 4rem;
+  }
+  footer .script{
+    font-size:1.7rem;
+    color: var(--lavender);
+    display:block;
+    margin-bottom:0.6rem;
+  }
+  footer p{
+    color: var(--ink-dim);
+    font-size:0.82rem;
+    letter-spacing:0.05em;
+  }
+</style>
+</head>
+<body>
+
+<audio id="bg-music" loop preload="none">
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+<button type="button" class="music-toggle" id="music-toggle" aria-label="Play background music" aria-pressed="false">
+  <span class="bars"><span></span><span></span><span></span></span>
+</button>
+
+<canvas id="stars-canvas"></canvas>
+<div id="particles" aria-hidden="true"></div>
+
+<main id="main-content">
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="eyebrow">Kya Soch Rhi Ho? Sabar Karo Thoda</div>
+    <div class="hero-photo">
+      <img src="bndrr.jpeg" alt="A photo of the two of you" loading="lazy">
+    </div>
+    <h1 class="display">Hiee <span class="script shimmer">Bndrr</span></h1>
+    <p class="hero-subtext">So... confused why I sent you this?</p>
+    <p class="hero-teaser">At the end of this website, you'll be clear why I sent you this.<br><span class="highlight">Please go through every line, every bit of text — all of it matters.</span></p>
+    <br>
+    <div class="moon" aria-hidden="true"></div>
+    <p class="hero-teaser">You were Like this moon, the source of hope in my dark<br></p>
+    <br>
+    <br>
+    <br>
+    <div class="scroll-cue"><span>Scroll</span><span class="line"></span></div>
+  </section>
+  
+  <!-- ================= SUSPICIOUS REVEAL ================= -->
+  <section id="mystery" class="mystery reveal">
+    <div class="eyebrow mystery-eyebrow"><span class="ping"></span> you might want to sit down for this</div>
+    <div class="mystery-stage">
+      <p class="mystery-text display" id="mystery-text">Okay so... do you know why I sent you this?</p>
+      <button type="button" class="btn btn-mystery" id="btn-mystery">Umm, no?</button>
+    </div>
+    <div class="mystery-final" id="mystery-final">
+      <div class="eyebrow">the truth is out</div>
+      <h2 class="display" id="mystery-final-title">Happy Friendship Day, <span class="script shimmer">Bndr</span> 🎉</h2>
+      <p id="mystery-final-text">You've been the best part of my everyday since the day we met. Every scroll on this page was just me trying to say it properly, for once.</p>
+    </div>
+  </section>
+
+  <!-- ================= SNAPSHOTS ================= -->
+  <section id="snapshots" class="reveal">
+    <div class="section-head">
+      <div class="eyebrow">Evidence, Exhibit A Through D</div>
+      <h2 class="display">Snapshots of us</h2>
+      <p>Four moments, picked from way too many to choose from. Swap these for our actual photos.</p>
+    </div>
+    <div class="gallery-grid reveal-stagger" id="gallery-grid">
+      <figure class="gallery-card stagger-item">
+        <img src="ss2.png" alt="Add a photo of the two of you" loading="lazy">
+        <figcaption class="gallery-caption">
+          <div class="num">2021 — The Beginning</div>
+          <h3 class="display">Where it started with just Hiee</h3>
+          <p>The exact moment neither of us knew this would turn into forever.</p>
+        </figcaption>
+      </figure>
+      <figure class="gallery-card stagger-item">
+        <img src="bond.png" alt="Add a photo of the two of you" loading="lazy">
+        <figcaption class="gallery-caption">
+          <div class="num">2022 — The Chaos</div>
+          <h3 class="display">From Strangers to Panda And Bndr</h3>
+          <p>Bond got better because you were the one making it with me.</p>
+        </figcaption>
+      </figure>
+      <figure class="gallery-card stagger-item">
+        <img src="ss3.png" alt="Add a photo of the two of you" loading="lazy">
+        <figcaption class="gallery-caption">
+          <div class="num">2022-24 — The Transitions</div>
+          <h3 class="display">Talks that ran too long from one app to another</h3>
+          <p>The good kind. The kind that fixed whatever needed fixing.</p>
+        </figcaption>
+      </figure>
+      <figure class="gallery-card stagger-item">
+        <img src="ss4.png" alt="Add a photo of the two of you" loading="lazy">
+        <figcaption class="gallery-caption">
+          <div class="num">2025 to soon</div>
+          <h3 class="display">Bond For Life Long</h3>
+          <p>Still my person. Still choosing this friendship, every time.</p>
+        </figcaption>
+      </figure>
+    </div>
+    <p class="snap-note">Friendship isn't the big, loud moments — it's the small ones that quietly add up. It's the check-in text for no reason, the laugh only the two of us understand, the comfort of knowing someone's in your corner no matter what. Out of everything life has given me, having a friend like you is the part I never want to take for granted.</p>
+  </section>
+
+  <!-- ================= FUNNY QUOTES ================= -->
+  <section id="quotes" class="reveal">
+    <div class="section-head">
+      <div class="eyebrow">Scientifically Proven Facts</div>
+      <h2 class="display shimmer">Things only besties understand</h2>
+    </div>
+    <div class="quote-carousel">
+      <button type="button" class="quote-arrow" id="quote-prev" aria-label="Previous quote">‹</button>
+      <div class="quote-viewport">
+        <p class="quote-text" id="quote-text"></p>
+      </div>
+      <button type="button" class="quote-arrow" id="quote-next" aria-label="Next quote">›</button>
+    </div>
+    <div class="quote-dots" id="quote-dots"></div>
+  </section>
+
+  <!-- ================= CUTE GIF SLIDER ================= -->
+  <section id="gif-moments" class="reveal">
+    <div class="section-head">
+      <div class="eyebrow">Mood: Us</div>
+      <h2 class="display">A little bit of chaos, animated</h2>
+      <p>Swipe right for more. Every one of these is basically our group chat, summarized.</p>
+    </div>
+    <div class="gif-slider-wrap">
+      <div class="gif-slider" id="gif-slider">
+        <div class="gif-slide">
+          <div class="gif-frame"><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3R3NDlleXZwZXUzMmttcnQ0Y295ZWhkMXNpdDdsZWEwZDlqMW9pcSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9dHM/QvZlIBaBXvZsYYBcW4/giphy.gif" alt="Cute cartoon sticker of two friends hugging" loading="lazy"></div>
+          <p class="gif-quote">"The world's softest place to land."</p>
+        </div>
+        <div class="gif-slide">
+          <div class="gif-frame"><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3R3NDlleXZwZXUzMmttcnQ0Y295ZWhkMXNpdDdsZWEwZDlqMW9pcSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/cuAWKiOTEOME6NoyYg/200.gif" alt="Cute cartoon sticker celebrating best friends" loading="lazy"></div>
+          <p class="gif-quote">"Friends like you don't happen twice."</p>
+        </div>
+        <div class="gif-slide">
+          <div class="gif-frame"><img src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3R3NDlleXZwZXUzMmttcnQ0Y295ZWhkMXNpdDdsZWEwZDlqMW9pcSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/9J8PLDgRZkJSAsVCWb/200.gif" alt="Cute cartoon sticker of a warm hug" loading="lazy"></div>
+          <p class="gif-quote">"Hugs, but make it a whole personality."</p>
+        </div>
+        <div class="gif-slide">
+          <div class="gif-frame"><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3R3NDlleXZwZXUzMmttcnQ0Y295ZWhkMXNpdDdsZWEwZDlqMW9pcSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/vrK3No8lQWuKvMALa7/giphy.gif" alt="Cute cartoon sticker of a happy friend" loading="lazy"></div>
+          <p class="gif-quote">"Certified chaos, handled together."</p>
+        </div>
+        <div class="gif-slide">
+          <div class="gif-frame"><img src="https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3R3NDlleXZwZXUzMmttcnQ0Y295ZWhkMXNpdDdsZWEwZDlqMW9pcSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/xUA7b6JsOu86We1CCs/giphy.gif" alt="Cute cartoon sticker of two friends together" loading="lazy"></div>
+          <p class="gif-quote">"Same wavelength, different bodies."</p>
+        </div>
+        <div class="gif-slide">
+          <div class="gif-frame"><img src="https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExb3R3NDlleXZwZXUzMmttcnQ0Y295ZWhkMXNpdDdsZWEwZDlqMW9pcSZlcD12MV9zdGlja2Vyc19zZWFyY2gmY3Q9cw/UCk66jR49QnXkt0ac1/giphy.gif" alt="Cute cartoon sticker of friendship love" loading="lazy"></div>
+          <p class="gif-quote">"You get the weird me, and you stay anyway."</p>
+        </div>
+      </div>
+      <div class="gif-slider-nav">
+        <button type="button" class="quote-arrow" id="gif-prev" aria-label="Previous gif">‹</button>
+        <div class="gif-dots" id="gif-dots"></div>
+        <button type="button" class="quote-arrow" id="gif-next" aria-label="Next gif">›</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONSTELLATION OF MEMORIES ================= -->
+  <section id="memories" class="reveal">
+    <div class="section-head">
+      <div class="eyebrow">Our Constellation</div>
+      <h2 class="display">Every star, a memory</h2>
+      <p>Trace the lines. Each point of light is a moment of us I keep coming back to.</p>
+    </div>
+
+    <div class="constellation-wrap">
+      <svg id="constellation-svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet"></svg>
+    </div>
+    <p class="memory-hint">Tap a star to read what it holds</p>
+    <div class="memory-card" id="memory-card">
+      <div class="memory-date" id="memory-date"></div>
+      <h3 id="memory-title"></h3>
+      <p id="memory-text"></p>
+    </div>
+  </section>
+
+  <!-- ================= LETTER ================= -->
+  <section id="letter" class="reveal">
+    <div class="section-head">
+      <div class="eyebrow">A Letter</div>
+      <h2 class="display">Written in starlight</h2>
+    </div>
+    <div class="letter">
+      <p><span class="dropcap">I</span>f you're reading this, it means you actually clicked through the whole page instead of just screenshotting it for later — which, honestly, is very on brand for us. I wanted to say happy Friendship Day in a way that couldn't fit in a text message: a whole quiet sky, just for us, where I could put down everything I don't say often enough.</p>
+      <p>You have this way of making ordinary days feel like they matter. I notice it in the small things — the normal calls that turn into hours, the way you remember details I forgot I even told you, how you show up without needing to be asked twice. None of it is small to me.</p>
+      <p>So here's a page that will still be here tomorrow, and the day after, holding all of this steady, the way you've held this friendship since the day it started.</p>
+      <div class="sign-off"><span class="script">Yours Panda</span></div>
+    </div>
+  </section>
+
+  <!-- ================= TIME TOGETHER ================= -->
+  <section id="together" class="together reveal">
+    <div class="section-head">
+      <div class="eyebrow">Since It Began</div>
+      <h2 class="display">Time we've shared</h2>
+    </div>
+    <div class="together-count reveal-stagger">
+      <div class="unit stagger-item"><div class="num" id="count-days">0</div><div class="label">Days</div></div>
+      <div class="unit stagger-item"><div class="num" id="count-hours">0</div><div class="label">Hours</div></div>
+      <div class="unit stagger-item"><div class="num" id="count-mins">0</div><div class="label">Minutes</div></div>
+      <div class="unit stagger-item"><div class="num" id="count-secs">0</div><div class="label">Seconds</div></div>
+    </div>
+    <p class="together-since" id="together-since"></p>
+  </section>
+
+  <!-- ================= FOREVER QUESTION ================= -->
+  <section id="forever" class="forever reveal">
+    <div class="eyebrow">One Last Thing</div>
+    <h2 class="display">Will we be friends forever?</h2>
+    <div class="question-box">
+      <div class="btn-row" id="btn-row">
+        <button type="button" class="btn btn-yes" id="btn-yes">Yes</button>
+        <button type="button" class="btn btn-no" id="btn-no">No->Try me Please</button>
+      </div>
+      <p class="no-count" id="no-count"></p>
+    </div>
+    <div class="forever-result" id="forever-result">
+      <span class="script" id="forever-result-text"></span>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <span class="script">Under the same sky, always</span>
+  <p>HAPPY FRIENDSHIP DAY &mdash; From Yours Panda</p>
+</footer>
+
+<script>
+(function(){
+  /* ============ EDIT THESE VALUES TO PERSONALIZE ============ */
+  const CONFIG = {
+    togetherSince: "2021-10-19T00:00:00", // set your "start" date/time
+    memories: [
+      { x: 120, y: 340, date: "19october 2021", title: "How we met", text: "A Random Hiee" },
+      { x: 260, y: 180, date: "May 2022", title: "Fake Id to Telegram", text: "Journey From Insta To tele" },
+      { x: 430, y: 280, date: "January 2023", title: "Trust Increased", text: "Tele To Numbers" },
+      { x: 590, y: 140, date: "December 2024", title: "Knowing Everything", text: "We were both stubborn. We were also both worth it." },
+      { x: 690, y: 350, date: "Today", title: "Right now", text: "Still choosing this friendship. Still counting the stars with you." }
+    ]
+  };
+  /* ============================================================ */
+
+  /* ---------- starfield ---------- */
+  const canvas = document.getElementById('stars-canvas');
+  const ctx = canvas.getContext('2d');
+  let stars = [];
+  let shooting = [];
+  let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+  function resize(){
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    canvas.style.width = window.innerWidth + 'px';
+    canvas.style.height = window.innerHeight + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    initStars();
+  }
+
+  function initStars(){
+    const count = Math.floor((window.innerWidth * window.innerHeight) / 9000);
+    stars = Array.from({length: count}, () => ({
+      x: Math.random() * window.innerWidth,
+      y: Math.random() * window.innerHeight,
+      r: Math.random() * 1.3 + 0.3,
+      baseAlpha: Math.random() * 0.5 + 0.35,
+      twinkleSpeed: Math.random() * 0.015 + 0.004,
+      phase: Math.random() * Math.PI * 2
+    }));
+  }
+
+  function maybeSpawnShootingStar(){
+    if (Math.random() < 0.004 && shooting.length < 2){
+      const startX = Math.random() * window.innerWidth * 0.6 + window.innerWidth * 0.2;
+      shooting.push({
+        x: startX, y: -10,
+        vx: -2.2 - Math.random()*1.5,
+        vy: 3 + Math.random()*1.5,
+        life: 1
+      });
+    }
+  }
+
+  let reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function draw(t){
+    ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
+    for (const s of stars){
+      const alpha = reduceMotion ? s.baseAlpha : s.baseAlpha + Math.sin(t * s.twinkleSpeed + s.phase) * 0.25;
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,240,242, ${Math.max(0, Math.min(1, alpha))})`;
+      ctx.fill();
+    }
+
+    if (!reduceMotion){
+      maybeSpawnShootingStar();
+      shooting.forEach(s => {
+        ctx.save();
+        ctx.strokeStyle = `rgba(244,184,128, ${s.life})`;
+        ctx.lineWidth = 1.4;
+        ctx.beginPath();
+        ctx.moveTo(s.x, s.y);
+        ctx.lineTo(s.x - s.vx*8, s.y - s.vy*8);
+        ctx.stroke();
+        ctx.restore();
+        s.x += s.vx; s.y += s.vy; s.life -= 0.02;
+      });
+      shooting = shooting.filter(s => s.life > 0 && s.y < window.innerHeight + 20);
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  requestAnimationFrame(draw);
+
+  /* ---------- constellation ---------- */
+  const svg = document.getElementById('constellation-svg');
+  const NS = 'http://www.w3.org/2000/svg';
+  const pts = CONFIG.memories;
+
+  // connecting lines
+  for (let i=0; i<pts.length-1; i++){
+    const line = document.createElementNS(NS, 'line');
+    line.setAttribute('x1', pts[i].x); line.setAttribute('y1', pts[i].y);
+    line.setAttribute('x2', pts[i+1].x); line.setAttribute('y2', pts[i+1].y);
+    line.setAttribute('class', 'constellation-line');
+    svg.appendChild(line);
+  }
+
+  const card = document.getElementById('memory-card');
+  const dateEl = document.getElementById('memory-date');
+  const titleEl = document.getElementById('memory-title');
+  const textEl = document.getElementById('memory-text');
+  let nodes = [];
+
+  pts.forEach((m, i) => {
+    const g = document.createElementNS(NS, 'g');
+    g.setAttribute('class', 'star-node');
+    g.setAttribute('tabindex', '0');
+    g.setAttribute('role', 'button');
+    g.setAttribute('aria-label', m.title);
+
+    const glow = document.createElementNS(NS, 'circle');
+    glow.setAttribute('cx', m.x); glow.setAttribute('cy', m.y);
+    glow.setAttribute('r', 9);
+    glow.setAttribute('fill', 'rgba(244,184,128,0.12)');
+
+    const core = document.createElementNS(NS, 'circle');
+    core.setAttribute('class', 'core');
+    core.setAttribute('cx', m.x); core.setAttribute('cy', m.y);
+    core.setAttribute('r', 4.5);
+
+    const label = document.createElementNS(NS, 'text');
+    label.setAttribute('x', m.x);
+    label.setAttribute('y', m.y - 16);
+    label.setAttribute('text-anchor', 'middle');
+    label.textContent = m.date;
+
+    g.appendChild(glow); g.appendChild(core); g.appendChild(label);
+    svg.appendChild(g);
+    nodes.push(g);
+
+    function activate(){
+      nodes.forEach(n => n.classList.remove('active'));
+      g.classList.add('active');
+      dateEl.textContent = m.date;
+      titleEl.textContent = m.title;
+      textEl.textContent = m.text;
+      card.classList.add('visible');
+    }
+
+    g.addEventListener('click', activate);
+    g.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); activate(); }});
+
+    if (i === 0) activate();
+  });
+
+  /* ---------- time together counter ---------- */
+  const since = new Date(CONFIG.togetherSince);
+  const dEl = document.getElementById('count-days');
+  const hEl = document.getElementById('count-hours');
+  const mEl = document.getElementById('count-mins');
+  const sEl = document.getElementById('count-secs');
+  const sinceLabel = document.getElementById('together-since');
+
+  sinceLabel.textContent = 'Counting every second since ' + since.toLocaleDateString(undefined, { year:'numeric', month:'long', day:'numeric' });
+
+  function tick(){
+    const diff = Math.max(0, Date.now() - since.getTime());
+    const totalSec = Math.floor(diff/1000);
+    const days = Math.floor(totalSec / 86400);
+    const hours = Math.floor((totalSec % 86400) / 3600);
+    const mins = Math.floor((totalSec % 3600) / 60);
+    const secs = totalSec % 60;
+    dEl.textContent = days;
+    hEl.textContent = String(hours).padStart(2,'0');
+    mEl.textContent = String(mins).padStart(2,'0');
+    sEl.textContent = String(secs).padStart(2,'0');
+  }
+  tick();
+  setInterval(tick, 1000);
+
+  /* ---------- scroll reveal ---------- */
+  const revealTargets = document.querySelectorAll('.reveal, .reveal-stagger');
+  if ('IntersectionObserver' in window){
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting){
+          entry.target.classList.add('in-view');
+          io.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.18, rootMargin: '0px 0px -60px 0px' });
+    revealTargets.forEach(el => io.observe(el));
+  } else {
+    revealTargets.forEach(el => el.classList.add('in-view'));
+  }
+
+  /* ---------- forever question: dodging No button ---------- */
+  const btnRow = document.getElementById('btn-row');
+  const btnNo = document.getElementById('btn-no');
+  const btnYes = document.getElementById('btn-yes');
+  const noCount = document.getElementById('no-count');
+  const foreverResult = document.getElementById('forever-result');
+  const foreverResultText = document.getElementById('forever-result-text');
+
+  const noMessages = [
+    "nice try",
+    "wrong answer",
+    "try again",
+    "not happening",
+    "the sky said no too",
+    "catch me if you can",
+    "still no",
+    "forever it is, apparently"
+  ];
+  let dodgeCount = 0;
+
+  function dodge(){
+    dodgeCount++;
+
+    // On very small screens, don't fully escape the viewport experience —
+    // still dodge, just within a comfortable margin.
+    const margin = 24;
+    const btnW = btnNo.offsetWidth || 110;
+    const btnH = btnNo.offsetHeight || 46;
+    const maxX = window.innerWidth - btnW - margin;
+    const maxY = window.innerHeight - btnH - margin;
+
+    const newX = Math.max(margin, Math.random() * maxX);
+    const newY = Math.max(margin, Math.random() * maxY);
+
+    if (!btnNo.classList.contains('is-dodging')){
+      btnNo.classList.add('is-dodging');
+    }
+    btnNo.style.left = newX + 'px';
+    btnNo.style.top = newY + 'px';
+
+    btnNo.textContent = noMessages[Math.min(dodgeCount - 1, noMessages.length - 1)];
+
+    noCount.textContent = dodgeCount === 1
+      ? "the no button seems camera-shy"
+      : `dodged ${dodgeCount} times and counting`;
+    noCount.classList.add('show');
+  }
+
+  // Dodge on hover (desktop) and on click/touch (mobile, where hover doesn't apply)
+  btnNo.addEventListener('mouseenter', dodge);
+  btnNo.addEventListener('click', (e) => { e.preventDefault(); dodge(); });
+  btnNo.addEventListener('touchstart', (e) => { e.preventDefault(); dodge(); }, { passive:false });
+
+  window.addEventListener('resize', () => {
+    if (btnNo.classList.contains('is-dodging')){
+      // keep it safely on-screen after a resize
+      const margin = 24;
+      const maxX = window.innerWidth - btnNo.offsetWidth - margin;
+      const maxY = window.innerHeight - btnNo.offsetHeight - margin;
+      btnNo.style.left = Math.min(parseFloat(btnNo.style.left||0), Math.max(margin,maxX)) + 'px';
+      btnNo.style.top = Math.min(parseFloat(btnNo.style.top||0), Math.max(margin,maxY)) + 'px';
+    }
+  });
+
+  function spawnHearts(originEl){
+    const rect = originEl.getBoundingClientRect();
+    const glyphs = ['❤️', '💙', '💛', '🤍', '💗', '✦'];
+    for (let i = 0; i < 10; i++){
+      const el = document.createElement('span');
+      el.className = 'heart-burst';
+      el.textContent = glyphs[Math.floor(Math.random()*glyphs.length)];
+      const startX = rect.left + rect.width/2 + (Math.random()-0.5)*60;
+      const startY = rect.top + (Math.random()-0.5)*20;
+      el.style.left = startX + 'px';
+      el.style.top = startY + 'px';
+      el.style.animationDelay = (Math.random()*0.2) + 's';
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1700);
+    }
+  }
+
+  btnYes.addEventListener('click', () => {
+    spawnHearts(btnYes);
+    foreverResultText.textContent = "forever it is \u2014 sealed under this sky";
+    foreverResult.classList.remove('show');
+    void foreverResult.offsetWidth; // restart animation
+    foreverResult.classList.add('show');
+    btnNo.style.opacity = '0.35';
+    btnNo.style.pointerEvents = 'none';
+    btnYes.style.pointerEvents = 'none';
+  });
+
+  /* ---------- mystery reveal: "do you know why I sent this?" ---------- */
+  const mysterySteps = [
+    { text: "You're probably wondering why you got a random link out of nowhere.", button: "kind of, yeah" },
+    { text: "No, I didn't just discover website builders. This one's on purpose.", button: "okay go on" },
+    { text: "It's Friendship Day. And a text felt way too small for what I wanted to say.", button: "and...?" },
+    { text: "So instead, I built you an entire website. About us. About you.", button: "wait, what" }
+  ];
+  let mysteryStep = 0;
+  const mysteryText = document.getElementById('mystery-text');
+  const mysteryStage = document.querySelector('.mystery-stage');
+  const btnMystery = document.getElementById('btn-mystery');
+  const mysteryFinal = document.getElementById('mystery-final');
+
+  btnMystery.addEventListener('click', () => {
+    mysteryText.classList.add('fade');
+    btnMystery.classList.add('fade');
+
+    setTimeout(() => {
+      if (mysteryStep < mysterySteps.length){
+        const step = mysterySteps[mysteryStep];
+        mysteryText.textContent = step.text;
+        btnMystery.textContent = step.button;
+        mysteryText.classList.remove('fade');
+        btnMystery.classList.remove('fade');
+        mysteryStep++;
+      } else {
+        mysteryStage.classList.add('done');
+        mysteryFinal.classList.add('show');
+        spawnHearts(mysteryFinal);
+        setTimeout(() => spawnHearts(mysteryFinal), 400);
+      }
+    }, 350);
+  });
+
+  /* ---------- floating ambient particles: hearts, stars, and butterflies ---------- */
+  if (!reduceMotion){
+    const particlesEl = document.getElementById('particles');
+    const heartEmojis = ['❤️', '💙', '💛', '🤍', '💗'];
+    const starGlyphs = ['✦', '✧', '✩', '⋆'];
+    const starColors = ['#f4b880', '#ff6f91', '#f4b8c8'];
+    const butterflyEmojis = ['🦋'];
+
+    function spawnParticle(){
+      const p = document.createElement('span');
+      const roll = Math.random();
+      const isButterfly = roll < 0.16;
+      const isHeart = !isButterfly && roll < 0.16 + 0.62;
+
+      let size, duration;
+      if (isButterfly){
+        p.className = 'particle butterfly';
+        p.textContent = butterflyEmojis[Math.floor(Math.random() * butterflyEmojis.length)];
+        size = 18 + Math.random() * 14;
+        duration = 11 + Math.random() * 9;
+      } else if (isHeart){
+        p.className = 'particle';
+        p.textContent = heartEmojis[Math.floor(Math.random() * heartEmojis.length)];
+        size = 14 + Math.random() * 20;
+        duration = 8 + Math.random() * 9;
+      } else {
+        p.className = 'particle';
+        p.textContent = starGlyphs[Math.floor(Math.random() * starGlyphs.length)];
+        p.style.color = starColors[Math.floor(Math.random() * starColors.length)];
+        size = 8 + Math.random() * 12;
+        duration = 8 + Math.random() * 9;
+      }
+
+      const drift = (Math.random() - 0.5) * 180;
+      p.style.left = (Math.random() * 100) + 'vw';
+      p.style.fontSize = size + 'px';
+      p.style.setProperty('--p-drift', drift + 'px');
+      p.style.setProperty('--p-op', (0.35 + Math.random() * 0.45).toFixed(2));
+      p.style.animationDuration = duration + 's';
+      particlesEl.appendChild(p);
+      setTimeout(() => p.remove(), duration * 1000 + 200);
+    }
+
+    // fill the sky right away, then keep a steady stream coming
+    for (let i = 0; i < 22; i++){
+      setTimeout(spawnParticle, i * 160);
+    }
+    setInterval(spawnParticle, 380);
+  }
+
+  /* ---------- magnetic hover on the Yes / mystery buttons ---------- */
+  function magnetize(el, strength){
+    if (!el || reduceMotion) return;
+    el.addEventListener('mousemove', (e) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left - rect.width / 2;
+      const y = e.clientY - rect.top - rect.height / 2;
+      el.style.setProperty('--mx', (x / rect.width) * strength + 'px');
+      el.style.setProperty('--my', (y / rect.height) * strength + 'px');
+    });
+    el.addEventListener('mouseleave', () => {
+      el.style.setProperty('--mx', '0px');
+      el.style.setProperty('--my', '0px');
+    });
+  }
+  magnetize(btnYes, 16);
+  magnetize(btnMystery, 14);
+
+  /* ---------- tilt effect on the photo gallery cards ---------- */
+  if (!reduceMotion){
+    document.querySelectorAll('.gallery-card').forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const px = (e.clientX - rect.left) / rect.width - 0.5;
+        const py = (e.clientY - rect.top) / rect.height - 0.5;
+        card.style.transform = `perspective(700px) rotateX(${(-py * 9).toFixed(2)}deg) rotateY(${(px * 9).toFixed(2)}deg) scale(1.03)`;
+      });
+      card.addEventListener('mouseleave', () => { card.style.transform = ''; });
+    });
+  }
+
+  /* ---------- funny quotes carousel ---------- */
+  const quotes = [
+    "Best friends: the ones who know how ridiculous you are and stay anyway.",
+    "A good friend helps you move. A best friend helps you move a body \u2014 and never brings it up again.",
+    "We're not like sisters. We're worse. We know all the same secrets.",
+    "Friendship level: finishing each other's sentences and each other's snacks.",
+    "You're the reason my camera roll is ninety percent memes and ten percent blurry photos of us.",
+    "I don't need a therapist, I have you and your questionable advice.",
+    "A real one remembers your order without being asked twice.",
+    "Our friendship is basically a true crime podcast waiting to happen."
+  ];
+  let quoteIndex = 0;
+  const quoteTextEl = document.getElementById('quote-text');
+  const quoteDots = document.getElementById('quote-dots');
+  const quotePrev = document.getElementById('quote-prev');
+  const quoteNext = document.getElementById('quote-next');
+  let quoteTimer = null;
+
+  quotes.forEach((_, i) => {
+    const dot = document.createElement('span');
+    dot.className = 'quote-dot' + (i === 0 ? ' active' : '');
+    dot.addEventListener('click', () => showQuote(i));
+    quoteDots.appendChild(dot);
+  });
+
+  function showQuote(i){
+    quoteIndex = (i + quotes.length) % quotes.length;
+    quoteTextEl.classList.add('fade');
+    setTimeout(() => {
+      quoteTextEl.textContent = quotes[quoteIndex];
+      quoteTextEl.classList.remove('fade');
+      [...quoteDots.children].forEach((d, di) => d.classList.toggle('active', di === quoteIndex));
+    }, 250);
+    restartQuoteTimer();
+  }
+
+  function restartQuoteTimer(){
+    if (quoteTimer) clearInterval(quoteTimer);
+    quoteTimer = setInterval(() => showQuote(quoteIndex + 1), 5000);
+  }
+
+  quoteTextEl.textContent = quotes[0];
+  quotePrev.addEventListener('click', () => showQuote(quoteIndex - 1));
+  quoteNext.addEventListener('click', () => showQuote(quoteIndex + 1));
+  restartQuoteTimer();
+
+  /* ---------- cute gif slider: native swipe on mobile + dots/arrows ---------- */
+  const gifSlider = document.getElementById('gif-slider');
+  if (gifSlider){
+    const gifSlides = [...gifSlider.children];
+    const gifDotsWrap = document.getElementById('gif-dots');
+    const gifPrev = document.getElementById('gif-prev');
+    const gifNext = document.getElementById('gif-next');
+
+    gifSlides.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'gif-dot' + (i === 0 ? ' active' : '');
+      dot.addEventListener('click', () => {
+        gifSlides[i].scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+      });
+      gifDotsWrap.appendChild(dot);
+    });
+    const gifDots = [...gifDotsWrap.children];
+
+    function gifNearestIndex(){
+      const center = gifSlider.scrollLeft + gifSlider.clientWidth / 2;
+      let closest = 0, closestDist = Infinity;
+      gifSlides.forEach((s, i) => {
+        const mid = s.offsetLeft + s.offsetWidth / 2;
+        const d = Math.abs(mid - center);
+        if (d < closestDist){ closestDist = d; closest = i; }
+      });
+      return closest;
+    }
+
+    let gifTicking = false;
+    gifSlider.addEventListener('scroll', () => {
+      if (gifTicking) return;
+      gifTicking = true;
+      requestAnimationFrame(() => {
+        const idx = gifNearestIndex();
+        gifDots.forEach((d, i) => d.classList.toggle('active', i === idx));
+        gifTicking = false;
+      });
+    }, { passive:true });
+
+    gifPrev.addEventListener('click', () => {
+      const idx = Math.max(0, gifNearestIndex() - 1);
+      gifSlides[idx].scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+    });
+    gifNext.addEventListener('click', () => {
+      const idx = Math.min(gifSlides.length - 1, gifNearestIndex() + 1);
+      gifSlides[idx].scrollIntoView({ behavior:'smooth', inline:'center', block:'nearest' });
+    });
+  }
+
+  /* ---------- background music toggle (loops continuously) ---------- */
+  const musicBtn = document.getElementById('music-toggle');
+  const bgMusic = document.getElementById('bg-music');
+  if (musicBtn && bgMusic){
+    bgMusic.volume = 0.5;
+    bgMusic.loop = true;
+
+    musicBtn.addEventListener('click', () => {
+      if (bgMusic.paused){
+        bgMusic.play().catch(() => {
+          musicBtn.setAttribute('aria-label', 'Add a music.mp3 file to enable audio');
+        });
+      } else {
+        bgMusic.pause();
+      }
+    });
+    bgMusic.addEventListener('play', () => {
+      musicBtn.classList.add('playing');
+      musicBtn.setAttribute('aria-pressed', 'true');
+      musicBtn.setAttribute('aria-label', 'Pause background music');
+    });
+    bgMusic.addEventListener('pause', () => {
+      musicBtn.classList.remove('playing');
+      musicBtn.setAttribute('aria-pressed', 'false');
+      musicBtn.setAttribute('aria-label', 'Play background music');
+    });
+
+    // Try to start playback on the very first tap/scroll anywhere on the page,
+    // since browsers block autoplay with sound until the user interacts.
+    let autoStartAttempted = false;
+    function tryAutoStart(){
+      if (autoStartAttempted) return;
+      autoStartAttempted = true;
+      bgMusic.play().catch(() => { /* stays silent until the button is tapped */ });
+      window.removeEventListener('click', tryAutoStart);
+      window.removeEventListener('touchstart', tryAutoStart);
+      window.removeEventListener('scroll', tryAutoStart);
+    }
+    window.addEventListener('click', tryAutoStart, { once:true });
+    window.addEventListener('touchstart', tryAutoStart, { once:true, passive:true });
+    window.addEventListener('scroll', tryAutoStart, { once:true, passive:true });
+  }
+})();
+</script>
+
+</body>
+</html>
